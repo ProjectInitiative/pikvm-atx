@@ -1,15 +1,13 @@
-# Project template for rp2040-hal
+# pikvm-atx
 
-This template is intended as a starting point for developing your own firmware based on the rp2040-hal.
+This project was created from the [rp2040-project-template](https://github.com/rp-rs/rp2040-project-template) project.
 
-It includes all of the `knurling-rs` tooling as showcased in https://github.com/knurling-rs/app-template (`defmt`, `defmt-rtt`, `panic-probe`, `flip-link`) to make development as easy as possible.
+This project allows for the control of multiple ATX power commands from a single PiKVM unit.
+The Raspberry Pi Pico microcontroller is used to create a serial over USB port on the host PiKVM unit. PiKVM unit can send byte arrays to tell the pico which computer's ATX command to execute, and for how long.
 
-`probe-run` is configured as the default runner, so you can start your program as easy as
-```sh
-cargo run --release
-```
+Currently only supports 4 servers to match the 4 outputs of the Ezcoo swtich. The GPIO pins are specified [here](https://github.com/ProjectInitiative/pikvm-atx/blob/11c8ea064bed4efc8f3fb10e5a9a07164d9d5eaf/src/main.rs#L103)
 
-If you aren't using a debugger (or want to use cargo-embed/probe-rs-debugger), check out [alternative runners](#alternative-runners) for other options
+Adding plugin and web UI support to the PiKVM project is currently in progress. The `send-atx-command.py` script is provided to achieve the comms. Copy the script to the PiKVM unit and install pyserial `pacman -Sy python3-pyserial`
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -17,14 +15,12 @@ If you aren't using a debugger (or want to use cargo-embed/probe-rs-debugger), c
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
     <li><a href="#markdown-header-requirements">Requirements</a></li>
+    <li><a href="#BOM">Bill Of Materials</a></li>
     <li><a href="#installation-of-development-dependencies">Installation of development dependencies</a></li>
     <li><a href="#running">Running</a></li>
     <li><a href="#alternative-runners">Alternative runners</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#code-of-conduct">Code of conduct</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -48,6 +44,18 @@ If you aren't using a debugger (or want to use cargo-embed/probe-rs-debugger), c
   [debug_probes.md](debug_probes.md)
 
 </details>
+
+<!-- BOM -->
+<details open="open">
+  <summary><h2 style="display: inline-block" id="BOM">Bill Of Materials</h2></summary>
+
+  * [Raspberry Pi Pico](https://www.amazon.com/dp/B08X7HN2VG)
+  * [Breadboard and wires](https://www.amazon.com/dp/B07KGQHJW8)
+  * [ATX Adapter Board](https://www.aliexpress.us/item/3256803575136141.html)
+  * (optional, can use other switches)[Ezcoo KVM Switch](https://www.amazon.com/dp/B082D7YJH6/)
+
+![pico](./imgs/pico.jpg)
+![boards](./imgs/boards.jpg)
 
 <!-- Installation of development dependencies -->
 <details open="open">
@@ -217,30 +225,6 @@ Some of the options for your `runner` are listed below:
 
 </details>
 
-<!-- ROADMAP -->
-
-## Roadmap
-
-NOTE These packages are under active development. As such, it is likely to
-remain volatile until a 1.0.0 release.
-
-See the [open issues](https://github.com/rp-rs/rp2040-project-template/issues) for a list of
-proposed features (and known issues).
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-The steps are:
-
-1. Fork the Project by clicking the 'Fork' button at the top of the page.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Make some changes to the code or documentation.
-4. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-5. Push to the Feature Branch (`git push origin feature/AmazingFeature`)
-6. Create a [New Pull Request](https://github.com/rp-rs/rp-hal/pulls)
-7. An admin will review the Pull Request and discuss any changes that may be required.
-8. Once everyone is happy, the Pull Request can be merged by an admin, and your work is part of our project!
 
 ## Code of Conduct
 
@@ -251,17 +235,3 @@ to intervene to uphold that code of conduct.
 [CoC]: CODE_OF_CONDUCT.md
 [rp-rs team]: https://github.com/orgs/rp-rs/teams/rp-rs
 
-## License
-
-The contents of this repository are dual-licensed under the _MIT OR Apache
-2.0_ License. That means you can chose either the MIT licence or the
-Apache-2.0 licence when you re-use this code. See `MIT` or `APACHE2.0` for more
-information on each specific licence.
-
-Any submissions to this project (e.g. as Pull Requests) must be made available
-under these terms.
-
-## Contact
-
-Raise an issue: [https://github.com/rp-rs/rp2040-project-template/issues](https://github.com/rp-rs/rp2040-project-template/issues)
-Chat to us on Matrix: [#rp-rs:matrix.org](https://matrix.to/#/#rp-rs:matrix.org)
