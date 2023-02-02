@@ -52,7 +52,7 @@ Adding plugin and web UI support to the PiKVM project is currently in progress. 
   * [Raspberry Pi Pico](https://www.amazon.com/dp/B08X7HN2VG)
   * [Breadboard and wires](https://www.amazon.com/dp/B07KGQHJW8)
   * [ATX Adapter Board](https://www.aliexpress.us/item/3256803575136141.html)
-  * (optional, can use other switches)[Ezcoo KVM Switch](https://www.amazon.com/dp/B082D7YJH6/)
+  * (optional, can use other switches) [Ezcoo KVM Switch](https://www.amazon.com/dp/B082D7YJH6/)
 
 ![pico](./imgs/pico.jpg)
 ![boards](./imgs/boards.jpg)
