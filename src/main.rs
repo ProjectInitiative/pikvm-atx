@@ -58,7 +58,7 @@ const CORE1_TASK_COMPLETE: u32 = 0xEE;
 /// Values to indicate ATX actions
 const RESET_DELAY: u32 = 100;
 const POWER_DELAY_SHORT: u32 = 100;
-const POWER_DELAY_LONG: u32 = 5000;
+const POWER_DELAY_LONG: u32 = 5500;
 
 const SERV1_RESET: u32 = u32::from_be_bytes([b'S', b'1', b'R', b'S']);
 const SERV1_POWER_SHORT: u32 = u32::from_be_bytes([b'S', b'1', b'P', b'S']);
