@@ -1,0 +1,87 @@
+kvmd:
+  hid:
+    mouse_alt:
+      device: /dev/kvmd-hid-mouse-alt
+  gpio:
+    drivers:
+      # === KVM Switch Driver ===
+      ez:
+        type: ezcoo
+        protocol: 2
+        device: /dev/ezcoo
+
+      # === ATX Command Drivers (One per action) ===
+      # Server 1
+      s1_reset_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S1RS"]
+      s1_power_short_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S1PS"]
+      s1_power_long_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S1PL"]
+      # Server 2
+      s2_reset_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S2RS"]
+      s2_power_short_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S2PS"]
+      s2_power_long_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S2PL"]
+      # Server 3
+      s3_reset_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S3RS"]
+      s3_power_short_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S3PS"]
+      s3_power_long_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S3PL"]
+      # Server 4
+      s4_reset_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S4RS"]
+      s4_power_short_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S4PS"]
+      s4_power_long_driver:
+        type: cmd
+        cmd: ["/usr/bin/sudo", "/usr/bin/python3", "/root/send-atx-command.py", "S4PL"]
+
+    scheme:
+      # === KVM Switch Schemes ===
+      ch0_led: { driver: ez, pin: 0, mode: input }
+      ch1_led: { driver: ez, pin: 1, mode: input }
+      ch2_led: { driver: ez, pin: 2, mode: input }
+      ch3_led: { driver: ez, pin: 3, mode: input }
+      ch0_button: { driver: ez, pin: 0, mode: output, switch: false }
+      ch1_button: { driver: ez, pin: 1, mode: output, switch: false }
+      ch2_button: { driver: ez, pin: 2, mode: output, switch: false }
+      ch3_button: { driver: ez, pin: 3, mode: output, switch: false }
+
+      # === ATX Command Schemes (Reference the drivers by name) ===
+      s1_reset:       { driver: s1_reset_driver,       mode: output, switch: false }
+      s1_power_short: { driver: s1_power_short_driver, mode: output, switch: false }
+      s1_power_long:  { driver: s1_power_long_driver,  mode: output, switch: false }
+      s2_reset:       { driver: s2_reset_driver,       mode: output, switch: false }
+      s2_power_short: { driver: s2_power_short_driver, mode: output, switch: false }
+      s2_power_long:  { driver: s2_power_long_driver,  mode: output, switch: false }
+      s3_reset:       { driver: s3_reset_driver,       mode: output, switch: false }
+      s3_power_short: { driver: s3_power_short_driver, mode: output, switch: false }
+      s3_power_long:  { driver: s3_power_long_driver,  mode: output, switch: false }
+      s4_reset:       { driver: s4_reset_driver,       mode: output, switch: false }
+      s4_power_short: { driver: s4_power_short_driver, mode: output, switch: false }
+      s4_power_long:  { driver: s4_power_long_driver,  mode: output, switch: false }
+
+    view:
+      table:
+        - ["#HDMI", "#Switch", "#Server", "#Reset", "#Power", "#Power (Long)"]
+        - [ch0_led, ch0_button, "#capstan1", s1_reset, s1_power_short, s1_power_long]
+        - [ch1_led, ch1_button, "#capstan2", s2_reset, s2_power_short, s2_power_long]
+        - [ch2_led, ch2_button, "#capstan3", s3_reset, s3_power_short, s3_power_long]
+        - [ch3_led, ch3_button, "#extra",    s4_reset, s4_power_short, s4_power_long]
+
